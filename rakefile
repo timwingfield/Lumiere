@@ -1,0 +1,13 @@
+require 'rake'
+require 'spec/rake/spectask'
+require 'cucumber/rake/task'
+
+desc 'Run me some rspec'
+Spec::Rake::SpecTask.new(:rspec) do |s|
+  s.spec_files = Dir.glob('spec/**/*_spec.rb')
+end
+
+desc 'Cuke it up'
+Cucumber::Rake::Task.new(:cuke) do |c|
+  c.cucumber_opts = 'features --format progress'
+end
