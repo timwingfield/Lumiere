@@ -7,6 +7,7 @@ require 'spec/interop/test'
 require 'mongo_mapper'
 require 'my_trip/app'
 require 'my_trip/model/trip'
+require 'my_trip/model/park_day'
 
 set :environment, :test
 set :run, false

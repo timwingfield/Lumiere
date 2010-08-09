@@ -1,0 +1,23 @@
+:javascript
+  $(function() {
+    $("#start_date").datepicker();
+    $("#end_date").datepicker();
+  });
+  
+%form{:action => "/new", :method => "post"}
+  %ul#trip_info
+    %li
+      %span Name:
+      %input{:type => "text", :id => "name", :name => "name"}
+    %li
+      %span Start Date:
+      %input{:type => "text", :id => "start_date", :name => "start_date"}
+    %li
+      %span End Date:
+      %input{:type => "text", :id => "end_date", :name => "end_date"}
+    %li
+      %span 
+        &nbsp;
+      %input{:type => "submit", :value => "Save Trip Info"}
+%p
+  %a{:href => "/"}Home

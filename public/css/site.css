@@ -1,0 +1,17 @@
+body {
+  margin: 0px;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #FBF9EF;
+  padding: 0px 6%; }
+
+#main {
+  margin: 16px; }
+
+#trip_info li, #trip_list li {
+  list-style-type: none; }
+
+#trip_info span {
+  display: inline-block;
+  width: 120px;
+  text-align: right;
+  margin: 0 2px 0 2px; }

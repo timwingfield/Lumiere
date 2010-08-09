@@ -1,0 +1,9 @@
+%h3
+  Your trips
+  %ul#trip_list
+    - @trips.each do |t|
+      %li
+        %span= t.name
+        %a{:href =>"/view/#{t.slug}"}View
+  %p
+    %a{:href => "/"}Home
