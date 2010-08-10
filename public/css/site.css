@@ -19,6 +19,11 @@ body {
 #trip_info li, #trip_list li {
   list-style-type: none; }
 
+#hours_list li {
+  list-style-type: none;
+  display: block;
+  font-size: .75em; }
+
 #trip_info span {
   display: inline-block;
   width: 120px;

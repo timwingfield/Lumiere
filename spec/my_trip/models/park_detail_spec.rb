@@ -16,4 +16,18 @@ describe ParkDetail do
   it { ParkDetail.keys['close'].type.should eql(String) }
   it { ParkDetail.keys['emh_am'].type.should eql(Boolean) }
   it { ParkDetail.keys['emh_pm'].type.should eql(Boolean) }
+
+  describe "when displaying the park hours in short form" do
+    before :all do
+      @trip = Trip.create(:name => "temp", 
+        :start_date => Date.new(2010, 04, 13),
+        :end_date => Date.new(2010, 04, 13))
+
+      @ak = @trip.park_days.first.park_details.first
+    end
+    
+    it 'should be formatted abbr: open to close' do
+      @ak.to_short_display.should eql('AK: 9 to 7') 
+    end
+  end
 end

@@ -2,4 +2,9 @@
 %h4= @trip.length_and_begins_on
 %ul#park_days_list
   - @trip.park_days.each do |d|
-    %li= d.to_s
+    %li
+      %span
+        = d.to_s
+      %ul#hours_list
+        - d.park_details.each do |detail|
+          %li= detail.to_short_display

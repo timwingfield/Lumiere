@@ -7,4 +7,8 @@ class ParkDetail
   key :close, String
   key :emh_am, Boolean
   key :emh_pm, Boolean
+
+  def to_short_display
+    "#{self.abbr}: #{self.open} to #{self.close}"
+  end
 end
