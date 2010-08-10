@@ -1,8 +1,6 @@
 require 'rubygems'
 require 'my_trip/app'
-require 'my_trip/model/trip'
-require 'my_trip/model/park_day.rb'
-#add my_trip/model/* later
+Dir["my_trip/model/*"].each {|file| require file }
 
 map '/' do
   run MyTrip
