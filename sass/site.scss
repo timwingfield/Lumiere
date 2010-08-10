@@ -11,6 +11,15 @@ body
   margin: 16px;
 }
 
+#park_days_list { margin: 0; padding: 0}
+
+#park_days_list li
+{
+  list-style-type: none;
+  display: inline;
+  margin-right: 20px;
+}
+
 #trip_info li, #trip_list li
 {
   list-style-type: none;

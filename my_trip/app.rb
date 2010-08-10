@@ -25,7 +25,7 @@ class MyTrip < Sinatra::Base
   end
 
   post "/new" do
-    Trip.create(params).slugify.save
+    Trip.create(params)
     redirect '/list'
   end
 

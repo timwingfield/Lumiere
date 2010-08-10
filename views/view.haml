@@ -1,2 +1,5 @@
 %h3= @trip.name
 %h4= @trip.length_and_begins_on
+%ul#park_days_list
+  - @trip.park_days.each do |d|
+    %li= d.to_s

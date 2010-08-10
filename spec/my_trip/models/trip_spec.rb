@@ -1,6 +1,10 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper') 
 
 describe Trip do
+  before :all do
+    MongoMapper.database.collections.each { |c| c.remove } 
+  end
+  
   it { Trip.keys.should include('name') }
   it { Trip.keys.should include('start_date') }
   it { Trip.keys.should include('end_date') }
