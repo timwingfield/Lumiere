@@ -69,4 +69,19 @@ describe Trip do
       @trip.park_days.first.date.should eql(@trip.start_date)
     end
   end
+
+  describe "when getting park day details" do
+    before :all do
+      @trip = Trip.create!(
+        :name => "One Day",
+        :start_date => Date.new(2010, 04, 13),
+        :end_date => Date.new(2010, 04, 13))
+
+      @details = @trip.get_park_day_details("apr13", "AK")
+    end
+
+    it 'should return the MK park day details' do
+      @details.abbr.should eql('AK')
+    end
+  end
 end

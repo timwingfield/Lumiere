@@ -7,4 +7,7 @@
         = d.to_s
       %ul#hours_list
         - d.park_details.each do |detail|
-          %li= detail.to_short_display
+          %li
+            %span= detail.to_short_display
+            %span
+              %a{:href => "/edit/#{@trip.slug}/#{d.slug}/#{detail.abbr}"} edit these hours

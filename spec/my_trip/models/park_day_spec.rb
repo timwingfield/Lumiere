@@ -31,5 +31,12 @@ describe ParkDay do
         @detail.abbr.should eql("AK")
       end
     end
+
+    describe "when slugifying the park day for a link" do
+      it 'should have a slug of the day' do
+        @my_day.slug.should eql("apr13")
+      end
+    end
+
   end
 end

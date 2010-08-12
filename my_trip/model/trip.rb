@@ -22,6 +22,12 @@ class Trip
     "#{self.days.to_s} #{day_str} beginning on #{self.start_date.strftime("%B %d")}"
   end
 
+  def get_park_day_details(park_day_slug, park_abbr)
+    pd = self.park_days.find_all {|p| p.slug == park_day_slug}
+    #pd.find_all {|d| d.abbr == park_abbr}
+    puts pd.inspect
+  end
+
   after_create :slugify
   after_create :add_park_days
   private 

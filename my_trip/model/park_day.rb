@@ -2,6 +2,7 @@ class ParkDay
   include MongoMapper::EmbeddedDocument
 
   key :date, Date
+  key :slug, String
 
   many :park_details
 
@@ -11,9 +12,14 @@ class ParkDay
 
   #TODO: Create something that will display park names/hours on view page
 
-  after_create :add_park_details
+  after_create :add_park_details, :slugify
 
   private
+
+  def slugify
+    self.slug = self.date.strftime("%b %d").downcase.gsub(" ", "")
+    save
+  end
 
   def add_park_details
     [
