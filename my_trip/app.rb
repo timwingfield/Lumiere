@@ -1,14 +1,14 @@
 require 'rubygems'
 require 'sinatra/base'
-require 'mongo_mapper'
+require 'mongoid'
 
 class MyTrip < Sinatra::Base
   set :static, true
   set :public, 'public'
   
   configure :development do
-    MongoMapper.connection = Mongo::Connection.new('localhost')
-    MongoMapper.database = 'LumiereDev'    
+    connection = Mongo::Connection.new
+    Mongoid.database = connection.db('LumiereDev')
   end
 
   get "/" do
@@ -20,7 +20,7 @@ class MyTrip < Sinatra::Base
   end
 
   get "/view/:trip" do
-    @trip = Trip.find_by_slug(params[:trip])
+    @trip = Trip.first(:conditions => {:slug => params[:trip]})
     haml :view
   end
 
@@ -35,10 +35,9 @@ class MyTrip < Sinatra::Base
   end
   
   get "/edit/:trip/:park_day/:park" do
-    @trip = Trip.find_by_slug(params[:trip])
-    #@park_day = @trip.park_days.find_all {|t| t.slug == params[:park_day]} 
-    @park_day = @trip.park_days.find(params[:park_day])
-    #@details = @park_day.park_details.find_all {|d| d.abbr == params[:park]}
+    @trip = Trip.where(:slug => params[:trip]).first
+    @park_day = @trip.park_days.find_all {|p| p.slug == params[:park_day]}.first
+    @details = @park_day.park_details.find_all {|d| d.abbr == params[:park]}.first
 
     haml :edit_detail
   end

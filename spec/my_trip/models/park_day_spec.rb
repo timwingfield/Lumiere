@@ -1,10 +1,8 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper') 
 
 describe ParkDay do
-  it { ParkDay.keys.should include('date') }
+  it { should have_field(:date).of_type(Date) }
   
-  it { ParkDay.keys['date'].type.should eql(Date) }
-
   describe "when displaying the park day" do
     before :all do
       @trip = Trip.create(:name => "temp", 

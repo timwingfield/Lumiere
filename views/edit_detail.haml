@@ -1,1 +1,6 @@
-%h3= @park_day.to_s
+%h3= "Edit #{@details.name} hours for #{@park_day.to_s}"
+%div
+  %form{:action => "/save_details", :method => "post"}
+    %p
+      Open:
+      %input{:type => "text", :name => "open", :value => @details.open}

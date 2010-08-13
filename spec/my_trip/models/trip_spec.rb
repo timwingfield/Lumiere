@@ -1,25 +1,15 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper') 
 
 describe Trip do
-  before :all do
-    MongoMapper.database.collections.each { |c| c.remove } 
-  end
-  
-  it { Trip.keys.should include('name') }
-  it { Trip.keys.should include('start_date') }
-  it { Trip.keys.should include('end_date') }
-  it { Trip.keys.should include('slug') }
-  it { Trip.keys.should include('_id') }
+  it { should have_field(:name).of_type(String) }
+  it { should have_field(:start_date).of_type(Date) }
+  it { should have_field(:end_date).of_type(Date) }
+  it { should have_field(:slug).of_type(String) }
 
-  it { Trip.keys['name'].type.should eql(String) }
-  it { Trip.keys['start_date'].type.should eql(Date) }
-  it { Trip.keys['end_date'].type.should eql(Date) }
-  it { Trip.keys['slug'].type.should eql(String) }
-  
   describe 'when adding the slug' do
     before :all do
       @trip = Trip.create(:name => "My Trip")
-      @complicated = Trip.create!(:name => "B&E go's to I/L/oh")
+      @complicated = Trip.create(:name => "B&E go's to I/L/oh")
     end
 
     it "should have a slug on the new Trip" do
@@ -33,7 +23,7 @@ describe Trip do
 
   describe "when displaying the trip info" do
     before :all do
-      @trip = Trip.create!(
+      @trip = Trip.create(
         :name => "My Trip",
         :start_date => Date.new(2010, 12, 1),
         :end_date => Date.new(2010, 12, 5))
@@ -55,7 +45,7 @@ describe Trip do
 
   describe "when adding the park days to a new trip" do
     before :all do
-      @trip = Trip.create!(
+      @trip = Trip.create(
         :name => "My Trip",
         :start_date => Date.new(2010, 12, 1),
         :end_date => Date.new(2010, 12, 5))    
@@ -70,18 +60,4 @@ describe Trip do
     end
   end
 
-  describe "when getting park day details" do
-    before :all do
-      @trip = Trip.create!(
-        :name => "One Day",
-        :start_date => Date.new(2010, 04, 13),
-        :end_date => Date.new(2010, 04, 13))
-
-      @details = @trip.get_park_day_details("apr13", "AK")
-    end
-
-    it 'should return the MK park day details' do
-      @details.abbr.should eql('AK')
-    end
-  end
 end

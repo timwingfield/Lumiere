@@ -1,10 +1,13 @@
 class ParkDay 
-  include MongoMapper::EmbeddedDocument
+  include Mongoid::Document
+  include Mongoid::Timestamps
 
-  key :date, Date
-  key :slug, String
 
-  many :park_details
+  field :date, :type => Date
+  field :slug, :type => String
+
+  embeds_many :park_details
+  embedded_in :trip, :inverse_of => :park_days
 
   def to_s
     self.date.strftime("%b %d")
@@ -12,14 +15,8 @@ class ParkDay
 
   #TODO: Create something that will display park names/hours on view page
 
-  after_create :add_park_details, :slugify
-
-  private
-
-  def slugify
-    self.slug = self.date.strftime("%b %d").downcase.gsub(" ", "")
-    save
-  end
+  before_create :add_park_details
+  after_create :slugify
 
   def add_park_details
     [
@@ -36,6 +33,13 @@ class ParkDay
         :open => park[:open],
         :close => park[:close])
     end
+  end
+
+  private
+
+  def slugify
+    self.slug = self.date.strftime("%b %d").downcase.gsub(" ", "")
     save
   end
+
 end

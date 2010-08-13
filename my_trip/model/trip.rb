@@ -1,13 +1,16 @@
+require 'rubygems'
+require 'mongoid'
+
 class Trip
-  include MongoMapper::Document
+  include Mongoid::Document
+  include Mongoid::Timestamps
 
-  key :start_date, Date
-  key :end_date, Date
-  key :name, String
-  key :slug, String
-  timestamps!
+  field :start_date, :type => Date
+  field :end_date, :type => Date
+  field :name
+  field :slug
 
-  many :park_days
+  embeds_many :park_days
 
   def days
     (self.end_date - self.start_date + 1).to_i
@@ -22,17 +25,10 @@ class Trip
     "#{self.days.to_s} #{day_str} beginning on #{self.start_date.strftime("%B %d")}"
   end
 
-  def get_park_day_details(park_day_slug, park_abbr)
-    pd = self.park_days.find_all {|p| p.slug == park_day_slug}
-    #pd.find_all {|d| d.abbr == park_abbr}
-    puts pd.inspect
-  end
-
-  after_create :slugify
-  after_create :add_park_days
+  after_create :generate_trip_slug, :add_park_days 
   private 
 
-  def slugify
+  def generate_trip_slug
     unless self.name.blank?
       self.slug = self.name.downcase.gsub(" ","-").gsub("'","").gsub("&","-n-").gsub("/","-")
     end
@@ -42,7 +38,12 @@ class Trip
   def add_park_days
     if self.start_date and self.end_date
       (self.start_date .. self.end_date).each do |d|
-        self.park_days << ParkDay.new(:date => d)
+        pd = ParkDay.new(:date => d,
+                         :slug => d.strftime("%b %d").downcase.gsub(" ", ""))
+
+        pd.add_park_details
+
+        self.park_days << pd
       end
     end
     save
