@@ -60,4 +60,51 @@ describe Trip do
     end
   end
 
+  describe "when finding a trip" do
+    before :all do
+      @trip1 = Trip.create(
+        :name => "My Trip2",
+        :start_date => Date.new(2010, 12, 1),
+        :end_date => Date.new(2010, 12, 5))    
+    end
+    
+    describe "by slug" do
+      before :all do
+        @t = Trip.find_by_slug("my-trip2")
+      end
+
+      it 'should find trip 1 by the my-trip slug' do
+        @t.should_not be_nil
+      end 
+
+      it 'should have the correct slug' do
+        @t.slug.should eql('my-trip2')
+      end
+
+      it 'should have five park days' do
+        @t.should have(5).park_days
+      end
+    end
+
+    describe "and querying its embedded documents" do
+      describe "and querying park days" do
+        before :each do
+          t = Trip.find_by_slug('my-trip2')
+          @pd = t.find_park_day_by_slug("dec02")
+        end
+
+        it 'should return a park day' do
+          @pd.should be_a(ParkDay)
+        end
+
+        it 'should have a slug of dec2' do
+          @pd.slug.should eql('dec02')
+        end
+
+        it 'should have 6 park details' do
+          @pd.should have(6).park_details
+        end
+      end
+    end
+  end
 end

@@ -25,6 +25,10 @@ class Trip
     "#{self.days.to_s} #{day_str} beginning on #{self.start_date.strftime("%B %d")}"
   end
 
+  def find_park_day_by_slug(park_day_slug)
+    self.park_days.find_all {|p| p.slug == park_day_slug}.first
+  end
+
   after_create :generate_trip_slug, :add_park_days 
   private 
 
@@ -47,5 +51,11 @@ class Trip
       end
     end
     save
+  end
+
+  class << self
+    def find_by_slug(slug)
+      first(:conditions => {:slug => slug})
+    end
   end
 end

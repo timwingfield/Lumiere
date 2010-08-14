@@ -20,7 +20,7 @@ class MyTrip < Sinatra::Base
   end
 
   get "/view/:trip" do
-    @trip = Trip.first(:conditions => {:slug => params[:trip]})
+    @trip = Trip.find_by_slug params[:trip]
     haml :view
   end
 
@@ -35,11 +35,24 @@ class MyTrip < Sinatra::Base
   end
   
   get "/edit/:trip/:park_day/:park" do
-    @trip = Trip.where(:slug => params[:trip]).first
-    @park_day = @trip.park_days.find_all {|p| p.slug == params[:park_day]}.first
-    @details = @park_day.park_details.find_all {|d| d.abbr == params[:park]}.first
+    @trip = Trip.find_by_slug params[:trip]
+    @park_day = @trip.find_park_day_by_slug params[:park_day]
+    @details = @park_day.find_park_detail_by_abbr params[:park]
 
     haml :edit_detail
+  end
+
+  post "/save_details" do
+    @trip = Trip.find_by_slug params[:trip]
+    @details = @trip.find_park_day_by_slug(params[:park_day]).find_park_detail_by_abbr(params[:park])
+
+    @details.open = params[:open]
+    @details.close = params[:close]
+    @details.emh_am = params[:emh_am] == 'on'
+    @details.emh_pm = params[:emh_pm] == 'on'
+    @details.save
+
+    redirect "/view/#{params[:trip]}"
   end
 
 end

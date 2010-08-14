@@ -18,6 +18,10 @@ class ParkDay
   before_create :add_park_details
   after_create :slugify
 
+  def find_park_detail_by_abbr(abbr)
+    self.park_details.find_all {|d| d.abbr == abbr}.first
+  end
+
   def add_park_details
     [
       {:abbr => "AK", :name => "Animal Kingdom", :open => "9", :close => "7"},

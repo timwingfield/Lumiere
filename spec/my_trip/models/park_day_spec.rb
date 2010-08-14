@@ -36,5 +36,18 @@ describe ParkDay do
       end
     end
 
+    describe "when finding the park detail by abbr" do
+      before :each do
+        @pd = @my_day.find_park_detail_by_abbr('MK')
+      end
+
+      it 'should be a park detail' do
+        @pd.should be_a(ParkDetail) 
+      end
+
+      it 'should have the abbr of MK' do
+        @pd.abbr.should eql('MK')
+      end
+    end
   end
 end

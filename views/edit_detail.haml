@@ -1,6 +1,22 @@
 %h3= "Edit #{@details.name} hours for #{@park_day.to_s}"
 %div
   %form{:action => "/save_details", :method => "post"}
-    %p
+    %input{:type => "hidden", :name => "trip", :value => @trip.slug}
+    %input{:type => "hidden", :name => "park_day", :value => @park_day.slug}
+    %input{:type => "hidden", :name => "park", :value => @details.abbr}
+    %div
       Open:
       %input{:type => "text", :name => "open", :value => @details.open}
+    %div
+      Close:
+      %input{:type => "text", :name => "close", :value => @details.close}
+    %div
+      Extra Magic Hours:
+      %br
+      Morning: 
+      %input{:type => "checkbox", :name => "emh_am", :checked => @details.emh_am}
+      %br
+      Evening: 
+      %input{:type => "checkbox", :name => "emh_pm", :checked => @details.emh_pm}
+    %div
+      %input{:type => "submit", :value => "Save Hours"}
