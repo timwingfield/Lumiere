@@ -8,6 +8,21 @@
       %ul#hours_list
         - d.park_details.each do |detail|
           %li
-            %span= detail.to_short_display
-            %span
-              %a{:href => "/edit/#{@trip.slug}/#{d.slug}/#{detail.abbr}"} edit these hours
+            = detail.to_short_display
+            %a{:href => "/edit/#{@trip.slug}/#{d.slug}/#{detail.abbr}"} edit these hours
+            %div
+              %form{:action => "/save_details/#{@trip.slug}/#{d.slug}/#{detail.abbr}", :method => "post"}
+                Morning EMH: 
+                %input{:type => "checkbox", :name => "emh_am", :checked => detail.emh_am}
+                &nbsp;&nbsp;|&nbsp;&nbsp;
+                Evening EMH: 
+                %input{:type => "checkbox", :name => "emh_pm", :checked => detail.emh_pm}
+                &nbsp;&nbsp;|&nbsp;&nbsp;
+                Open:
+                %input{:size => 2, :type => "text", :name => "open", :value => detail.open}
+                &nbsp;&nbsp;|&nbsp;&nbsp;
+                Close:
+                %input{:size => 2, :type => "text", :name => "close", :value => detail.close}
+                &nbsp;&nbsp;|&nbsp;&nbsp;
+                %input{:type => "submit", :value => "Save Hours"}
+                

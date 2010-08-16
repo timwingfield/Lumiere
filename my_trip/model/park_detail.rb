@@ -13,6 +13,9 @@ class ParkDetail
   embedded_in :park_day, :inverse_of => :park_details
 
   def to_short_display
-    "#{self.abbr}: #{self.open} to #{self.close}"
+    if self.emh_am then am = "EMH " end
+    if self.emh_pm then pm = " EMH" end
+
+    "#{self.abbr}: #{am}#{self.open} to #{self.close}#{pm}"
   end
 end
