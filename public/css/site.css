@@ -29,3 +29,6 @@ body {
   width: 120px;
   text-align: right;
   margin: 0 2px 0 2px; }
+
+.toggle-div {
+  display: hidden; }

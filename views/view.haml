@@ -1,10 +1,14 @@
 :javascript
   $(document).ready(function() {
-    alert('document ready!');
+    //alert('document ready!');
+    $('a.toggler').each(function(){
+      $("#edit-" + $(this).attr('name')).hide();
+    });
+
     $('a.toggler').click(function(e) {
       e.preventDefault();
-      var toggler = $(this).href
-      alert(toggler);
+      var toggleBase = $(this).attr('name');
+      $("#edit-" + toggleBase).toggle('blind');
     });
   });
 
@@ -19,8 +23,8 @@
         - d.park_details.each do |detail|
           %li
             = detail.to_short_display
-            %a{:href => "", :toggle => "edit-#{d.slug}-#{detail.abbr}", :class => 'toggler'} edit
-            %div{:id => "edit-#{d.slug}-#{detail.abbr}"}
+            %a{:name => "#{d.slug}-#{detail.abbr}", :href => "", :toggle => "edit-#{d.slug}-#{detail.abbr}", :class => 'toggler'} edit
+            %div{:id => "edit-#{d.slug}-#{detail.abbr}", :class => "toggle-div"}
               %form{:action => "/save_details/#{@trip.slug}/#{d.slug}/#{detail.abbr}", :method => "post"}
                 Morning EMH: 
                 %input{:type => "checkbox", :name => "emh_am", :checked => detail.emh_am}
