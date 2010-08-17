@@ -1,3 +1,13 @@
+:javascript
+  $(document).ready(function() {
+    alert('document ready!');
+    $('a.toggler').click(function(e) {
+      e.preventDefault();
+      var toggler = $(this).href
+      alert(toggler);
+    });
+  });
+
 %h3= @trip.name
 %h4= @trip.length_and_begins_on
 %ul#park_days_list
@@ -9,8 +19,8 @@
         - d.park_details.each do |detail|
           %li
             = detail.to_short_display
-            %a{:href => "/edit/#{@trip.slug}/#{d.slug}/#{detail.abbr}"} edit these hours
-            %div
+            %a{:href => "", :toggle => "edit-#{d.slug}-#{detail.abbr}", :class => 'toggler'} edit
+            %div{:id => "edit-#{d.slug}-#{detail.abbr}"}
               %form{:action => "/save_details/#{@trip.slug}/#{d.slug}/#{detail.abbr}", :method => "post"}
                 Morning EMH: 
                 %input{:type => "checkbox", :name => "emh_am", :checked => detail.emh_am}
@@ -24,5 +34,6 @@
                 Close:
                 %input{:size => 2, :type => "text", :name => "close", :value => detail.close}
                 &nbsp;&nbsp;|&nbsp;&nbsp;
-                %input{:type => "submit", :value => "Save Hours"}
+                %input{:type => "submit", :value => "OK"}
+                %input{:type => "button", :value => "Cancel", :class => "cancel"}
                 
