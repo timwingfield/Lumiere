@@ -42,7 +42,7 @@ class MyTrip < Sinatra::Base
     haml :edit_detail
   end
 
-  post "/save_details/:trip/:park_day/:park" do
+  post "/save_details" do
     @trip = Trip.find_by_slug params[:trip]
     @details = @trip.find_park_day_by_slug(params[:park_day]).find_park_detail_by_abbr(params[:park])
 
@@ -52,7 +52,7 @@ class MyTrip < Sinatra::Base
     @details.emh_pm = params[:emh_pm] == 'on'
     @details.save
 
-    redirect "/view/#{params[:trip]}"
+    @details.to_short_display
   end
 
 end

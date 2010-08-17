@@ -1,14 +1,32 @@
 :javascript
   $(document).ready(function() {
-    //alert('document ready!');
     $('a.toggler').each(function(){
       $("#edit-" + $(this).attr('name')).hide();
     });
 
     $('a.toggler').click(function(e) {
       e.preventDefault();
+      
       var toggleBase = $(this).attr('name');
       $("#edit-" + toggleBase).toggle('blind');
+    });
+
+    $('input.cancel').click(function(e) {
+      $(this).parent().parent().toggle('blind');
+    });
+
+    $('form').submit(function(e) {
+      var formArray = $(this).serializeArray();
+      var idBase = formArray[1].value + "-" + formArray[2].value;
+      var labelToUpdate = "#label-" + idBase;
+      var editToClose = "#edit-" + idBase;
+
+      $.post('/save_details', formArray, function(data){
+        $(labelToUpdate).html(data);
+        $(editToClose).toggle('blind');
+      });
+
+      e.preventDefault();
     });
   });
 
@@ -22,10 +40,14 @@
       %ul#hours_list
         - d.park_details.each do |detail|
           %li
-            = detail.to_short_display
+            %span{:id => "label-#{d.slug}-#{detail.abbr}"}
+              = detail.to_short_display
             %a{:name => "#{d.slug}-#{detail.abbr}", :href => "", :toggle => "edit-#{d.slug}-#{detail.abbr}", :class => 'toggler'} edit
             %div{:id => "edit-#{d.slug}-#{detail.abbr}", :class => "toggle-div"}
-              %form{:action => "/save_details/#{@trip.slug}/#{d.slug}/#{detail.abbr}", :method => "post"}
+              %form{:action => "/save_details", :method => "post"}
+                %input{:type => "hidden", :name => "trip", :value => @trip.slug }
+                %input{:type => "hidden", :name => "park_day", :value => d.slug }
+                %input{:type => "hidden", :name => "park", :value => detail.abbr}
                 Morning EMH: 
                 %input{:type => "checkbox", :name => "emh_am", :checked => detail.emh_am}
                 &nbsp;&nbsp;|&nbsp;&nbsp;
