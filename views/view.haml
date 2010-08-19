@@ -37,12 +37,13 @@
     %li
       %span
         = d.to_s
+      %a{:href => "/park_day/#{@trip.slug}/#{d.slug}"} View this day
       %ul#hours_list
         - d.park_details.each do |detail|
           %li
             %span{:id => "label-#{d.slug}-#{detail.abbr}"}
               = detail.to_short_display
-            %a{:name => "#{d.slug}-#{detail.abbr}", :href => "", :toggle => "edit-#{d.slug}-#{detail.abbr}", :class => 'toggler'} edit
+            %a{:name => "#{d.slug}-#{detail.abbr}", :href => "", :class => 'toggler'} edit
             %div{:id => "edit-#{d.slug}-#{detail.abbr}", :class => "toggle-div"}
               %form{:action => "/save_details", :method => "post"}
                 %input{:type => "hidden", :name => "trip", :value => @trip.slug }

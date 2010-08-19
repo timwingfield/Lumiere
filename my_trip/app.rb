@@ -42,6 +42,13 @@ class MyTrip < Sinatra::Base
     haml :edit_detail
   end
 
+  get "/park_day/:trip/:park_day" do
+    @trip = Trip.find_by_slug params[:trip]
+    @park_day = @trip.find_park_day_by_slug params[:park_day]
+
+    haml :park_day
+  end
+
   post "/save_details" do
     @trip = Trip.find_by_slug params[:trip]
     @details = @trip.find_park_day_by_slug(params[:park_day]).find_park_detail_by_abbr(params[:park])
