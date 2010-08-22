@@ -1,6 +1,28 @@
+:javascript
+  $(function() {
+    $("#park_day_items").accordion({ autoHeight: false });
+  });
+
 %h3 View your Park Day
 %p= @trip.name + ": " + @park_day.to_s
-%p Space for My Park Choices
-%p Space for Meals
-%p Space for my details
-%p Space for activities
+#park_day_items
+  %h3
+    %a{:href => "#"}My Park Choices
+  %div
+    %p park choices details, text, what have you
+  %h3
+    %a{:href => "#"}Meals
+  %div
+    %p meals for your day at the park
+  %h3
+    %a{:href => "#"}my details
+  %div
+    %p the details I want to add, like TouringPlans.com crowd level information
+    %p some more information about your details
+    %p maybe you have a couple of notes
+    %p and today's crowd rating is 7
+    %p Epcot's crowd rating is 4.3
+  %h3
+    %a{:href => "#"}for activities
+  %div
+    %p non-park activities, such as going to downtown disney or hanging out at the pool
