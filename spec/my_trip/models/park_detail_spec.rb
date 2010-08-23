@@ -7,8 +7,8 @@ describe ParkDetail do
   it { should have_field(:abbr).of_type(String) }
   it { should have_field(:open).of_type(String) }
   it { should have_field(:close).of_type(String) }
-  it { should have_field(:emh_am).of_type(Boolean) }
-  it { should have_field(:emh_pm).of_type(Boolean) }
+  it { should have_field(:emh_am).of_type(Boolean).with_default_value_of(false) }
+  it { should have_field(:emh_pm).of_type(Boolean).with_default_value_of(false) }
   
   describe "when displaying the park hours in short form" do
     before :all do

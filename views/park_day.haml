@@ -9,7 +9,12 @@
   %h3
     %a{:href => "#"}My Park Choices
   %div
-    %p park choices details, text, what have you
+    %a{:href => "/park_choices/#{@trip.slug}/#{@park_day.slug}"}Manage your park choices
+    %h4 Your Park Selections for Today
+    %ul
+      - @park_day.my_park_choices.each do |choice|
+        %li
+          = "#{choice.name}: #{choice.park_abbr}" 
   %h3
     %a{:href => "#"}Meals
   %div

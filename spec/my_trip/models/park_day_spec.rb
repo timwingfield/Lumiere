@@ -49,5 +49,97 @@ describe ParkDay do
         @pd.abbr.should eql('MK')
       end
     end
+
+    describe "when adding new park choices with the park day save choice method" do
+      describe "and adding a new morning park choice" do
+        before :each do
+          @my_day.save_park_choice("Morning", "MK")
+        end
+
+        it 'should add one item to the my park choices collection' do
+          @my_day.my_park_choices.should have(1).item
+        end
+
+        it 'should have an arrival time of 9 on the new item' do
+          @my_day.my_park_choices.first.arrive.should eql("9")
+        end
+
+        it 'should have a name of Morning' do
+          @my_day.my_park_choices.first.name.should eql("Morning")
+        end
+
+        it 'should have a departure of 12' do
+          @my_day.my_park_choices.first.depart.should eql("12")
+        end
+
+        it 'should have a park abbreviation of MK' do
+          @my_day.my_park_choices.first.park_abbr.should eql("MK")
+        end
+
+        after :each do
+          @my_day.my_park_choices = nil
+        end
+      end
+
+      describe "and adding a new afternoon park choice" do
+        before :each do
+          @my_day.save_park_choice("Afternoon", "EP")
+        end
+
+        it 'should add one item to the my park choices collection' do
+          @my_day.my_park_choices.should have(1).item
+        end
+
+        it 'should have an arrival time of 12 on the new item' do
+          @my_day.my_park_choices.first.arrive.should eql("12")
+        end
+
+        it 'should have a name of Afternoon' do
+          @my_day.my_park_choices.first.name.should eql("Afternoon")
+        end
+
+        it 'should have a departure of 5' do
+          @my_day.my_park_choices.first.depart.should eql("5")
+        end
+
+        it 'should have a park abbreviation of EP' do
+          @my_day.my_park_choices.first.park_abbr.should eql("EP")
+        end
+
+        after :each do
+          @my_day.my_park_choices = nil
+        end
+      end
+      
+      describe "and adding a new evening park choice" do
+        before :each do
+          @my_day.save_park_choice("Evening", "DS")
+        end
+
+        it 'should add one item to the my park choices collection' do
+          @my_day.my_park_choices.should have(1).item
+        end
+
+        it 'should have an arrival time of 5 on the new item' do
+          @my_day.my_park_choices.first.arrive.should eql("5")
+        end
+
+        it 'should have a name of Evening' do
+          @my_day.my_park_choices.first.name.should eql("Evening")
+        end
+
+        it 'should have a departure of 9' do
+          @my_day.my_park_choices.first.depart.should eql("9")
+        end
+
+        it 'should have a park abbreviation of DS' do
+          @my_day.my_park_choices.first.park_abbr.should eql("DS")
+        end
+
+        after :each do
+          @my_day.my_park_choices = nil
+        end
+      end      
+    end
   end
 end

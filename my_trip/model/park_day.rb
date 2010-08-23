@@ -7,16 +7,30 @@ class ParkDay
   field :slug, :type => String
 
   embeds_many :park_details
+  embeds_many :my_park_choices
   embedded_in :trip, :inverse_of => :park_days
 
   def to_s
     self.date.strftime("%b %d")
   end
 
-  #TODO: Create something that will display park names/hours on view page
+  def save_park_choice(time_of_day, park_abbr)
+    times = {"Morning" => {"arrive" => "9", "depart" => "12"}, 
+          "Afternoon" => {"arrive" => "12", "depart" => "5"},
+          "Evening" => {"arrive" => "5", "depart" => "9"}}
 
-  before_create :add_park_details
-  after_create :slugify
+    arrive = times[time_of_day]["arrive"]
+    depart = times[time_of_day]["depart"]
+
+    choice = MyParkChoice.new(
+                :name => time_of_day,
+                :park_abbr => park_abbr,
+                :arrive => arrive,
+                :depart => depart)
+
+    self.my_park_choices << choice
+    choice.save
+  end
 
   def find_park_detail_by_abbr(abbr)
     self.park_details.find_all {|d| d.abbr == abbr}.first
@@ -39,11 +53,12 @@ class ParkDay
     end
   end
 
+  after_create :slugify
+
   private
 
   def slugify
     self.slug = self.date.strftime("%b %d").downcase.gsub(" ", "")
     save
   end
-
 end

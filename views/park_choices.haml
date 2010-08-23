@@ -1,0 +1,27 @@
+%h3 Manage your park choices
+%form{:action => "/park_choices", :method => "post"}
+  %input{:type => "hidden", :name => "trip", :value => @trip.slug }
+  %input{:type => "hidden", :name => "park_day", :value => @park_day.slug }
+  #choices_list
+    %div{:style => "border-bottom: solid 1px #333"}
+      %h3 Morning
+      %p Select a park you'd like to visit in the morning
+      %select{:name => "morning_park_abbr"}
+        - @park_list.each do |abbr|
+          %option= abbr
+
+    %div{:style => "border-bottom: solid 1px #333"}
+      %h3 Afternoon
+      %p Select a park you'd like to visit in the afternoon 
+      %select{:name => "afternoon_park_abbr"}
+        - @park_list.each do |abbr|
+          %option= abbr
+      
+    %div{:style => "border-bottom: solid 1px #333"}
+      %h3 Evening
+      %p Select a park you'd like to visit in the Evening 
+      %select{:name => "evening_park_abbr"}
+        - @park_list.each do |abbr|
+          %option= abbr
+      
+    %input{:type => "submit", :value => "Save Park Choices"}

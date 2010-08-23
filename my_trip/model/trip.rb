@@ -29,7 +29,7 @@ class Trip
     self.park_days.find_all {|p| p.slug == park_day_slug}.first
   end
 
-  after_create :generate_trip_slug, :add_park_days 
+  after_create :add_park_days, :generate_trip_slug
   private 
 
   def generate_trip_slug
@@ -46,6 +46,7 @@ class Trip
                          :slug => d.strftime("%b %d").downcase.gsub(" ", ""))
 
         pd.add_park_details
+        #pd.init_my_park_choices
 
         self.park_days << pd
       end

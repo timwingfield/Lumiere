@@ -34,19 +34,31 @@ class MyTrip < Sinatra::Base
     haml :list
   end
   
-  get "/edit/:trip/:park_day/:park" do
-    @trip = Trip.find_by_slug params[:trip]
-    @park_day = @trip.find_park_day_by_slug params[:park_day]
-    @details = @park_day.find_park_detail_by_abbr params[:park]
-
-    haml :edit_detail
-  end
-
   get "/park_day/:trip/:park_day" do
     @trip = Trip.find_by_slug params[:trip]
     @park_day = @trip.find_park_day_by_slug params[:park_day]
 
     haml :park_day
+  end
+
+  get "/park_choices/:trip/:park_day" do
+    @trip = Trip.find_by_slug params[:trip]
+    @park_day = @trip.find_park_day_by_slug params[:park_day]
+    @park_list = %w(none MK EP DS AK TL BB)
+
+    haml :park_choices
+  end  
+
+  post "/park_choices" do
+    @trip = Trip.find_by_slug params[:trip]
+    @park_day = @trip.find_park_day_by_slug params[:park_day]
+
+    #@my_day.save_park_choice("Evening", "DS")
+    @park_day.save_park_choice("Morning", params[:morning_park_abbr]) unless params[:morning_park_abbr] == 'none'
+    @park_day.save_park_choice("Afternoon", params[:afternoon_park_abbr]) unless params[:afternoon_park_abbr] == 'none'
+    @park_day.save_park_choice("Evening", params[:evening_park_abbr]) unless params[:evening_park_abbr] == 'none'
+  
+    redirect "/park_day/#{@trip.slug}/#{@park_day.slug}"
   end
 
   post "/save_details" do
