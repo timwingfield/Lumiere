@@ -1,9 +1,9 @@
 require 'rubygems'
 require 'sinatra'
 require 'rack/test'
-require 'spec'
-require 'spec/autorun'
-require 'spec/interop/test'
+require 'rspec'
+#require 'spec/autorun'
+#require 'spec/interop/test'
 require 'mongoid'
 require 'my_trip/app'
 
@@ -23,7 +23,6 @@ set :logging, false
 require 'mongoid-rspec'
 
 RSpec.configure do |config|
-  config.include RSpec::Matchers
   config.include Mongoid::Matchers
   config.mock_with :rspec
   config.before :all do
