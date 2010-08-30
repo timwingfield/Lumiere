@@ -1,6 +1,10 @@
 :javascript
   $(function() {
     $("#park_day_items").accordion({ autoHeight: false });
+    $(".edit_meal .edit").button({
+      icons: { primary: 'ui-icon-pencil'},
+      text: false
+    });
   });
 
 %h3 View your Park Day
@@ -17,8 +21,11 @@
           = "#{choice.name}: #{choice.park_abbr}" 
   %h3
     %a{:href => "#"}Meals
-  %div
-    %p meals for your day at the park
+  %div{:style => "font-size: .25em"}
+    - Meal.default_meal_names.each do |meal_name|
+      .edit_meal
+        =meal_name
+        %button{:class => 'edit', :id => "edit_#{meal_name}"} Edit
   %h3
     %a{:href => "#"}my details
   %div
