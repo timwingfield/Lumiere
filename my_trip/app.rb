@@ -57,6 +57,7 @@ class MyTrip < Sinatra::Base
     # %w(morning afternoon evening).each do |time_of_day|
     #   @park_day.send(:save_park_choice, ["#{time_of_day[0].upcase}#{time_of_day[1..-1]}"], params["#{time_of_day}_park_abbr".to_sym]) unless params["#{time_of_day}_park_abbr".to_sym] == "none"
     # end
+    
     @park_day.save_park_choice("Morning", params[:morning_park_abbr]) unless params[:morning_park_abbr] == "none"
     @park_day.save_park_choice("Afternoon", params[:afternoon_park_abbr]) unless params[:afternoon_park_abbr] == "none"
     @park_day.save_park_choice("Evening", params[:evening_park_abbr]) unless params[:evening_park_abbr] == "none"

@@ -141,5 +141,84 @@ describe ParkDay do
         end
       end      
     end
+    
+    describe "when finding a meal by name" do
+      before :each do
+        @my_day.meals << Meal.new(:name => 'lunch', :meal_type => 'Table Service')
+        @meal = @my_day.find_meal_by_name('lunch')
+      end
+
+      it 'should have the expected name' do
+        @meal.name.should eql('lunch')
+      end
+
+      it 'should have the expected type' do
+        @meal.meal_type.should eql('Table Service')
+      end
+
+      it 'should return nil for an empty search' do
+        empty = @my_day.find_meal_by_name('no_way')
+        empty.should be_nil
+      end
+
+      after :each do
+        @my_day.meals = nil
+      end
+    end
+
+    describe "when saving meals" do
+      describe "and saving a new meal" do
+        before :each do
+          @meal = Meal.new(:name => "lunch", :meal_type => "Quick Service")
+          @my_day.save_meal(@meal)
+        end
+
+        it 'should have one meal in the list' do
+          @my_day.meals.should have(1).item
+        end
+
+        it 'should have the same name on the meal as the one saved' do
+          @my_day.meals[0].name.should eql(@meal.name)
+        end
+
+        after :each do
+          @my_day.meals = nil
+        end
+      end
+
+      describe "and updating an existing meal of the same meal type" do
+        before :each do
+          @meal = Meal.new(
+                  :name => "lunch", 
+                  :meal_type => "Quick Service", 
+                  :time => "11:45",
+                  :restaurant => "Cosmic Ray's")
+          @my_day.save_meal(@meal)
+
+          @new_meal = Meal.new(
+                  :name => "lunch", 
+                  :meal_type => "Quick Service", 
+                  :time => "12:30",
+                  :restaurant => "Pecos Bills")
+          @my_day.save_meal(@new_meal)
+        end
+
+        it 'should have 1 meal in the list' do
+          @my_day.meals.should have(1).item
+        end
+
+        it 'should have the new time on the meal' do
+          @my_day.meals[0].time.should eql(@new_meal.time)
+        end
+
+        it 'should have the new restuarant name on the meal' do
+          @my_day.meals[0].restaurant.should eql(@new_meal.restaurant)
+        end
+
+        after :each do
+          @my_day.meals = nil
+        end
+      end
+    end
   end
 end

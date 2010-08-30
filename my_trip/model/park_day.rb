@@ -2,16 +2,32 @@ class ParkDay
   include Mongoid::Document
   include Mongoid::Timestamps
 
-
   field :date, :type => Date
   field :slug, :type => String
 
   embeds_many :park_details
   embeds_many :my_park_choices
+  embeds_many :meals
   embedded_in :trip, :inverse_of => :park_days
 
   def to_s
     self.date.strftime("%b %d")
+  end
+
+  def find_meal_by_name(name)
+    self.meals.find_all {|m| m.name == name}.first
+  end
+
+  def find_park_detail_by_abbr(abbr)
+    self.park_details.find_all {|d| d.abbr == abbr}.first
+  end
+
+  def save_meal(meal)
+    m = find_meal_by_name(meal.name)
+    m.destroy if m != nil
+    
+    self.meals << meal
+    meal.save
   end
 
   def save_park_choice(time_of_day, park_abbr)
@@ -30,10 +46,6 @@ class ParkDay
 
     self.my_park_choices << choice
     choice.save
-  end
-
-  def find_park_detail_by_abbr(abbr)
-    self.park_details.find_all {|d| d.abbr == abbr}.first
   end
 
   def add_park_details
