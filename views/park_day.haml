@@ -4,7 +4,7 @@
     $(".edit_meal .edit").button({
       icons: { primary: 'ui-icon-pencil'},
       text: false
-    });
+    }).click(function() {alert(this.id);});
   });
 
 %h3 View your Park Day
@@ -26,6 +26,55 @@
       .edit_meal
         =meal_name
         %button{:class => 'edit', :id => "edit_#{meal_name}"} Edit
+    #meal_dialog
+      #quick_service
+        %h4 Quick Service Meal
+        %form{:id => 'save_qs', :method => 'post', :action => 'save_meal'}
+          %hidden{:id => 'meal_type', :name => 'meal_type', :value => 'Quick Service'}
+          - Meal.quick_service_fields.each do |field|
+            %span= "#{field.capitalize}: "
+            %input{:name => "#{field}", :id => "#{field}"}
+          %span Time: 
+          %input{:name => "time", :id => "time"}
+          %span Notes: 
+          %input{:name => "notes", :id => "notes"}
+          %input{:type => "submit", :value => "save"}
+      #table_service
+        %h4 Table Service Meal
+        %form{:id => 'save_ts', :method => 'post', :action => 'save_meal'}
+          %hidden{:id => 'meal_type', :name => 'meal_type', :value => 'Table Service'}
+          - Meal.table_service_fields.each do |field|
+            %span= "#{field.capitalize.gsub('_', ' ')}: "
+            %input{:name => "#{field}", :id => "#{field}"}
+          %span Time: 
+          %input{:name => "time", :id => "time"}
+          %span Notes: 
+          %input{:name => "notes", :id => "notes"}
+          %input{:type => "submit", :value => "save"}
+      #outside_wdw
+        %h4 Meal Outside WDW
+        %form{:id => 'save_outside_wdw', :method => 'post', :action => 'save_meal'}
+          %hidden{:id => 'meal_type', :name => 'meal_type', :value => 'Outside WDW'}
+          - Meal.outside_wdw_fields.each do |field|
+            %span= "#{field.capitalize.gsub('_', ' ')}: "
+            %input{:name => "#{field}", :id => "#{field}"}
+          %span Time: 
+          %input{:name => "time", :id => "time"}
+          %span Notes: 
+          %input{:name => "notes", :id => "notes"}
+          %input{:type => "submit", :value => "save"}
+      #custom_meal
+        %h4 Custom Meal 
+        %form{:id => 'save_custom_meal', :method => 'post', :action => 'save_meal'}
+          %hidden{:id => 'meal_type', :name => 'meal_type', :value => 'Custom Meal'}
+          - Meal.custom_meal_fields.each do |field|
+            %span= "#{field.capitalize.gsub('_', ' ')}: "
+            %input{:name => "#{field}", :id => "#{field}"}
+          %span Time: 
+          %input{:name => "time", :id => "time"}
+          %span Notes: 
+          %input{:name => "notes", :id => "notes"}
+          %input{:type => "submit", :value => "save"}
   %h3
     %a{:href => "#"}my details
   %div
