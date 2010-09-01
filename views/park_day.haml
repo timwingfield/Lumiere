@@ -1,10 +1,23 @@
 :javascript
   $(function() {
     $("#park_day_items").accordion({ autoHeight: false });
+
+    $(".meal_field").hide();
+    
     $(".edit_meal .edit").button({
       icons: { primary: 'ui-icon-pencil'},
       text: false
-    }).click(function() {alert(this.id);});
+    })
+    .click(function() {
+      $("#meal_dialog").dialog({modal:true, width:800, height:500, title:"Manage Meals: " + $(this).attr("title")});
+    });
+    
+    $("#my_radios").buttonset().find("input[type=radio]").change(function(e){
+      $(".meal_field").hide();
+      $("#" + this.id + "_fields").show();
+    });
+
+    $("#meal_dialog").hide();
   });
 
 %h3 View your Park Day
@@ -25,56 +38,23 @@
     - Meal.default_meal_names.each do |meal_name|
       .edit_meal
         =meal_name
-        %button{:class => 'edit', :id => "edit_#{meal_name}"} Edit
-    #meal_dialog
-      #quick_service
-        %h4 Quick Service Meal
-        %form{:id => 'save_qs', :method => 'post', :action => 'save_meal'}
-          %hidden{:id => 'meal_type', :name => 'meal_type', :value => 'Quick Service'}
-          - Meal.quick_service_fields.each do |field|
-            %span= "#{field.capitalize}: "
-            %input{:name => "#{field}", :id => "#{field}"}
-          %span Time: 
-          %input{:name => "time", :id => "time"}
-          %span Notes: 
-          %input{:name => "notes", :id => "notes"}
-          %input{:type => "submit", :value => "save"}
-      #table_service
-        %h4 Table Service Meal
-        %form{:id => 'save_ts', :method => 'post', :action => 'save_meal'}
-          %hidden{:id => 'meal_type', :name => 'meal_type', :value => 'Table Service'}
-          - Meal.table_service_fields.each do |field|
-            %span= "#{field.capitalize.gsub('_', ' ')}: "
-            %input{:name => "#{field}", :id => "#{field}"}
-          %span Time: 
-          %input{:name => "time", :id => "time"}
-          %span Notes: 
-          %input{:name => "notes", :id => "notes"}
-          %input{:type => "submit", :value => "save"}
-      #outside_wdw
-        %h4 Meal Outside WDW
-        %form{:id => 'save_outside_wdw', :method => 'post', :action => 'save_meal'}
-          %hidden{:id => 'meal_type', :name => 'meal_type', :value => 'Outside WDW'}
-          - Meal.outside_wdw_fields.each do |field|
-            %span= "#{field.capitalize.gsub('_', ' ')}: "
-            %input{:name => "#{field}", :id => "#{field}"}
-          %span Time: 
-          %input{:name => "time", :id => "time"}
-          %span Notes: 
-          %input{:name => "notes", :id => "notes"}
-          %input{:type => "submit", :value => "save"}
-      #custom_meal
-        %h4 Custom Meal 
-        %form{:id => 'save_custom_meal', :method => 'post', :action => 'save_meal'}
-          %hidden{:id => 'meal_type', :name => 'meal_type', :value => 'Custom Meal'}
-          - Meal.custom_meal_fields.each do |field|
-            %span= "#{field.capitalize.gsub('_', ' ')}: "
-            %input{:name => "#{field}", :id => "#{field}"}
-          %span Time: 
-          %input{:name => "time", :id => "time"}
-          %span Notes: 
-          %input{:name => "notes", :id => "notes"}
-          %input{:type => "submit", :value => "save"}
+        %button{:class => 'edit', :id => "edit_#{meal_name}", :title => "#{meal_name.capitalize}"} Edit
+    #meal_dialog{:style => "font-size: .75em"}
+      %form{:id=>"meal_type", :method => 'post', :action => 'save_meal'}
+        #my_radios
+          - {:quick_service => "Quick Service", :table_service => "Table Service", :outside_wdw => "Outside WDW", :custom_meal => "Custom"}.each_pair do |key, value|
+            %label{:for=>"meal_type_#{key}", :title=>value}= value
+            %input{:type => "radio", :id=>"meal_type_#{key}", :name => 'meal_type', :value => value}
+          - {:quick_service => "Quick Service", :table_service => "Table Service", :outside_wdw => "Outside WDW", :custom_meal => "Custom"}.each_pair do |key, value|
+            %div{:id=>"meal_type_#{key}_fields", :class=>"meal_field"}
+              - Meal.send("#{key}_fields".to_sym).each do |field|
+                %span= "#{field.capitalize}: "
+                %input{:name => "#{field}", :id => "#{field}"}
+        %span Time: 
+        %input{:name => "time", :id => "time"}
+        %span Notes: 
+        %input{:name => "notes", :id => "notes"}
+        %input{:type => "submit", :value => "save"} 
   %h3
     %a{:href => "#"}my details
   %div
