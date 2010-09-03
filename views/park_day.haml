@@ -3,18 +3,23 @@
     $("#park_day_items").accordion({ autoHeight: false });
 
     $(".meal_field").hide();
+
+    $("#meal_type_quick_service").attr("checked", "checked");
     
     $(".edit_meal .edit").button({
       icons: { primary: 'ui-icon-pencil'},
       text: false
     })
     .click(function() {
-      $("#meal_dialog").dialog({modal:true, width:800, height:500, title:"Manage Meals: " + $(this).attr("title")});
+      $("#meal_dialog").dialog({modal:true, width:600, height:500, title:"Manage Meals: " + $(this).attr("title")});
+      $("#meal_type #name").val($(this).attr("title"));
     });
     
     $("#my_radios").buttonset().find("input[type=radio]").change(function(e){
       $(".meal_field").hide();
+      $(".meal_field INPUT").attr("disabled", true);
       $("#" + this.id + "_fields").show();
+      $("#" + this.id + "_fields INPUT").removeAttr("disabled");
     });
 
     $("#meal_dialog").hide();
@@ -41,6 +46,7 @@
         %button{:class => 'edit', :id => "edit_#{meal_name}", :title => "#{meal_name.capitalize}"} Edit
     #meal_dialog{:style => "font-size: .75em"}
       %form{:id=>"meal_type", :method => 'post', :action => 'save_meal'}
+        %input{:type => "hidden", :id => "name", :name => "name"}
         #my_radios
           - {:quick_service => "Quick Service", :table_service => "Table Service", :outside_wdw => "Outside WDW", :custom_meal => "Custom"}.each_pair do |key, value|
             %label{:for=>"meal_type_#{key}", :title=>value}= value
@@ -48,13 +54,14 @@
           - {:quick_service => "Quick Service", :table_service => "Table Service", :outside_wdw => "Outside WDW", :custom_meal => "Custom"}.each_pair do |key, value|
             %div{:id=>"meal_type_#{key}_fields", :class=>"meal_field"}
               - Meal.send("#{key}_fields".to_sym).each do |field|
-                %span= "#{field.capitalize}: "
+                %span= "#{field.gsub("_", " ").capitalize}: "
                 %input{:name => "#{field}", :id => "#{field}"}
-        %span Time: 
-        %input{:name => "time", :id => "time"}
-        %span Notes: 
-        %input{:name => "notes", :id => "notes"}
-        %input{:type => "submit", :value => "save"} 
+        .meal_static_field
+          %span Time: 
+          %input{:name => "time", :id => "time"}
+          %span Notes: 
+          %input{:name => "notes", :id => "notes"}
+          %input{:type => "submit", :value => "save"} 
   %h3
     %a{:href => "#"}my details
   %div
