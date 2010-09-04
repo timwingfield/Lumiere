@@ -12,7 +12,7 @@ Mongoid.configure do |config|
   host = "localhost"
   config.master = Mongo::Connection.new.db(name)
 end
-
+Dir["lib/*"].each {|file| require file}
 Dir["my_trip/model/*"].each {|file| require file }
 
 set :environment, :test

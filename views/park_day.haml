@@ -26,10 +26,10 @@
 
     $("#meal_type").submit(function(e) {
       var meal = $(this).serializeArray();
-      var mealDiv;
+      var mealDiv = '#' + meal[0].value.toLowerCase() + '_display';
 
       $.post('/save_meal', meal, function(data){
-        //alert(data);
+        $(mealDiv).html(data);
       });
 
       e.preventDefault();
@@ -62,7 +62,7 @@
       %form{:id=>"meal_type", :method => 'post', :action => 'save_meal'}
         %input{:type => "hidden", :id => "name", :name => "name"}
         #my_radios
-          - {:quick_service => "Quick Service", :table_service => "Table Service", :outside_wdw => "Outside WDW", :custom_meal => "Custom"}.each_pair do |key, value|
+          - {:quick_service => "Quick Service", :table_service => "Table Service", :outside_wdw => "Outside WDW", :custom_meal => "Custom Meal"}.each_pair do |key, value|
             %label{:for=>"meal_type_#{key}", :title=>value}= value
             %input{:type => "radio", :id=>"meal_type_#{key}", :name => 'meal_type', :value => value}
           - {:quick_service => "Quick Service", :table_service => "Table Service", :outside_wdw => "Outside WDW", :custom_meal => "Custom"}.each_pair do |key, value|

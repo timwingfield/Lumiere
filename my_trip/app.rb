@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'sinatra/base'
 require 'mongoid'
+require 'lib/meal_helpers'
 
 class MyTrip < Sinatra::Base
   set :static, true
@@ -82,7 +83,7 @@ class MyTrip < Sinatra::Base
 
     @park_day.save_meal(m)
 
-    "meal saved"
+    MealHelpers.format_for_park_day(m)
   end
 
   post "/save_details" do
