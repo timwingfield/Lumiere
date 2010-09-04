@@ -66,8 +66,21 @@ class MyTrip < Sinatra::Base
   end
 
   post "/save_meal" do
-    # @trip = Trip.find_by_slug params[:trip]
-    # @park_day = @trip.find_park_day_by_slug params[:park_day]
+    @trip = Trip.find_by_slug params[:trip]
+    @park_day = @trip.find_park_day_by_slug params[:park_day]
+
+    meal_type = params[:meal_type].gsub(" ", "_").downcase
+
+    m = Meal.new(:name => params[:name],
+                  :meal_type => meal_type,
+                  :time => params[:time],
+                  :notes => params[:notes])
+
+    Meal.send("#{meal_type}_fields".to_sym).each do |field|
+      m.write_attribute(field.to_sym, params[field.to_sym])
+    end
+
+    @park_day.save_meal(m)
 
     "meal saved"
   end

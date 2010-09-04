@@ -57,6 +57,7 @@
       .edit_meal
         =meal_name
         %button{:class => 'edit', :id => "edit_#{meal_name}", :title => "#{meal_name.capitalize}"} Edit
+      %div{:id => "#{meal_name}_display"}
     #meal_dialog{:style => "font-size: .75em"}
       %form{:id=>"meal_type", :method => 'post', :action => 'save_meal'}
         %input{:type => "hidden", :id => "name", :name => "name"}
@@ -74,6 +75,8 @@
           %input{:name => "time", :id => "time"}
           %span Notes: 
           %input{:name => "notes", :id => "notes"}
+          %input{:type => "hidden", :name => "trip", :value => @trip.slug }
+          %input{:type => "hidden", :name => "park_day", :value => @park_day.slug }
           %input{:type => "submit", :value => "save"} 
   %h3
     %a{:href => "#"}my details
