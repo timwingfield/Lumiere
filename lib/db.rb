@@ -4,7 +4,8 @@ module Lumiere
   module Database
     def self.init_mongo
       if ENV['MONGOHQ_URL']
-        #get the mongo hq shiznit in here
+        connection = Mongo::Connection.new(ENV['MONGOHQ_URL'])
+        Mongoid.database = connection.db('LumiereStaging')
       else
         connection = Mongo::Connection.new("localhost")
         Mongoid.database = connection.db('LumiereDev')
