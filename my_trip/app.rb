@@ -77,9 +77,9 @@ class MyTrip < Sinatra::Base
                   :time => params[:time],
                   :notes => params[:notes])
 
-    Meal.send("#{meal_type}_fields".to_sym).each do |field|
-      m.write_attribute(field.to_sym, params[field.to_sym])
-    end
+    #Meal.send("#{meal_type}_fields".to_sym).each do |field|
+    #  m.write_attribute(field.to_sym, params[field.to_sym])
+    #end
 
     @park_day.save_meal(m)
 
