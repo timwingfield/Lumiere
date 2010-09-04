@@ -72,7 +72,7 @@ class MyTrip < Sinatra::Base
 
     meal_type = params[:meal_type].gsub(" ", "_").downcase
 
-    m = Meal.new(:name => params[:name],
+    m = Meal.new(:name => params[:name].downcase,
                   :meal_type => meal_type,
                   :time => params[:time],
                   :notes => params[:notes])

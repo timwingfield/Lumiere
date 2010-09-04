@@ -1,5 +1,7 @@
 module MealHelpers
   def self.format_for_park_day(meal)
+    return "" if meal == nil
+
     html = "<ul>"
     html << "<li>#{meal.meal_type.gsub("_", " ").capitalize}</li>"
     html << "<li>Time: #{meal.time}</li>"
