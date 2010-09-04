@@ -2,14 +2,14 @@ require 'rubygems'
 require 'sinatra/base'
 require 'mongoid'
 require 'lib/meal_helpers'
+require 'lib/db'
 
 class MyTrip < Sinatra::Base
   set :static, true
   set :public, 'public'
   
-  configure :development do
-    connection = Mongo::Connection.new
-    Mongoid.database = connection.db('LumiereDev')
+  configure do
+    Lumiere::Database.init_mongo
   end
 
   get "/" do
