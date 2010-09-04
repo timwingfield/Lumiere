@@ -9,6 +9,10 @@ module Lumiere
       else
         Mongoid.database = Mongo::Connection.new("localhost").db('LumiereDev')
       end
+
+      Mongoid.configure do |config|
+        config.allow_dynamic_fields = true 
+      end
     end
   end
 end
