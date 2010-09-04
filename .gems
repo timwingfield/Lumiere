@@ -1,5 +1,5 @@
 sinatra
-activesupport --version '>= 3.0.0'
+activesupport --version 2.3.8
 haml
 mongoid
 bson_ext
