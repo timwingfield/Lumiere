@@ -47,8 +47,6 @@ class MyTrip < Sinatra::Base
     @park_day = @trip.find_park_day_by_slug params[:park_day]
     @park_list = %w(none MK EP DS AK TL BB)
 
-    @breakfast = @park_day.find_meal_by_name('Breakfast')
-
     haml :park_choices
   end  
 
