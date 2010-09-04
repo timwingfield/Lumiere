@@ -23,6 +23,19 @@
     });
 
     $("#meal_dialog").hide();
+
+    $("#meal_type").submit(function(e) {
+      var meal = $(this).serializeArray();
+      var mealDiv;
+
+      $.post('/save_meal', meal, function(data){
+        //alert(data);
+      });
+
+      e.preventDefault();
+      $("#meal_dialog").dialog('close');
+    });
+
   });
 
 %h3 View your Park Day
@@ -39,7 +52,7 @@
           = "#{choice.name}: #{choice.park_abbr}" 
   %h3
     %a{:href => "#"}Meals
-  %div{:style => "font-size: .25em"}
+  %div{:style => "font-size: .5em"}
     - Meal.default_meal_names.each do |meal_name|
       .edit_meal
         =meal_name

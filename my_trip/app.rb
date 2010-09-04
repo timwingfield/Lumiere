@@ -53,9 +53,9 @@ class MyTrip < Sinatra::Base
     @trip = Trip.find_by_slug params[:trip]
     @park_day = @trip.find_park_day_by_slug params[:park_day]
 
-    # The Leon way. Refactor to this someday.
+    #The Leon way. Should be fixed. TW - 9/3
     # %w(morning afternoon evening).each do |time_of_day|
-    #   @park_day.send(:save_park_choice, ["#{time_of_day[0].upcase}#{time_of_day[1..-1]}"], params["#{time_of_day}_park_abbr".to_sym]) unless params["#{time_of_day}_park_abbr".to_sym] == "none"
+    #   @park_day.send(:save_park_choice, ["#{time_of_day.capitalize}"], params["#{time_of_day}_park_abbr".to_sym]) unless params["#{time_of_day}_park_abbr".to_sym] == "none"
     # end
     
     @park_day.save_park_choice("Morning", params[:morning_park_abbr]) unless params[:morning_park_abbr] == "none"
@@ -63,6 +63,13 @@ class MyTrip < Sinatra::Base
     @park_day.save_park_choice("Evening", params[:evening_park_abbr]) unless params[:evening_park_abbr] == "none"
   
     redirect "/park_day/#{@trip.slug}/#{@park_day.slug}"
+  end
+
+  post "/save_meal" do
+    # @trip = Trip.find_by_slug params[:trip]
+    # @park_day = @trip.find_park_day_by_slug params[:park_day]
+
+    "meal saved"
   end
 
   post "/save_details" do
