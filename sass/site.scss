@@ -38,7 +38,12 @@ body
   height: 80px;
 }
 
-#logo { float: left; display: inline-block; }
+#logo 
+{ 
+  float: left;
+  display: inline-block; 
+}
+
 #header-links 
 { 
   float: right; 
