@@ -116,6 +116,26 @@ describe Meal do
     
     end
 
+    describe "magic writers" do
+      before(:each) do
+        @meal_x = Meal.new(:name => "Krusty Krab")
+      end
+
+      it 'should reuse the same setters and getters as needed.' do
+        @meal_x.foo = "bar"
+        @meal_x.foo
+        @meal_x.should_not_receive(:method_missing)
+        
+        @meal_x.foo = "baz"
+        @meal_x.foo.should eql("baz")
+      end
+
+      it 'should add a new attribute to meal' do
+        @meal_x.foo = "bar"
+        @meal_x.foo.should eql("bar")
+      end
+    end
+
   end
 
 end

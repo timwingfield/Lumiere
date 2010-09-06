@@ -36,14 +36,18 @@ private
   end
 
   def method_missing(message, *args, &blk)
-    if(self.read_attribute(message))
+    msg_string = message.to_s
+    if(msg_string =~ /.+=/)
+      create_method(message) do |val|
+        self.write_attribute(msg_string.gsub(/=/,""), val)
+      end
+      return send(message, args.first)
+    elsif(self.read_attribute(message))
       create_method(message) do
         self.read_attribute(message) 
       end
-      send(message)
-    else 
-      super(message, *args, &blk)
+      return send(message)
     end
-
+    super(message, *args, &blk)
   end
 end
