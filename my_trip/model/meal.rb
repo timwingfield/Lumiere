@@ -28,4 +28,22 @@ class Meal
   def self.custom_meal_fields
     ["description", "location"]
   end
+
+private
+
+  def create_method(name, &block)
+    self.class.send(:define_method, name, &block)
+  end
+
+  def method_missing(message, *args, &blk)
+    if(self.read_attribute(message))
+      create_method(message) do
+        self.read_attribute(message) 
+      end
+      send(message)
+    else 
+      super(message, *args, &blk)
+    end
+
+  end
 end

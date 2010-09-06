@@ -100,5 +100,22 @@ describe Meal do
         @custom.should include('location')
       end
     end
+  
+    describe "magic readers." do
+      before(:each) do
+        @magic_meal = Meal.new(:magic => true, :awesome => true)
+      end
+
+      it "should return the proper values" do
+        @magic_meal.magic.should be_true 
+      end
+
+      it "should continue up the responder chain if no attr exists." do 
+        lambda{ @magic_meal.foo }.should raise_exception NoMethodError
+      end
+    
+    end
+
   end
+
 end

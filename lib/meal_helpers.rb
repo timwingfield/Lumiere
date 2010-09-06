@@ -7,7 +7,7 @@ module MealHelpers
     html << "<li>Time: #{meal.time}</li>"
 
     Meal.send("#{meal.meal_type}_fields".to_sym).each do |field|
-      value = meal.read_attribute(field.to_sym)
+      value = meal.send(field)
 
       html << "<li>"
       html << "<span>#{field.gsub("_", " ").capitalize}: </span>"
