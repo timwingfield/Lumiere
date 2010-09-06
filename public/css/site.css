@@ -1,12 +1,65 @@
+/*
+#771426 deep red
+#A31B34 burgundy (Studios)
+#627F40 green (Animal Kingdom)
+#3B1C55 purple (Magic Kingdom)
+#441708 dark brown/black (background)
+#251472 blue (Epcot) (also links)
+#7D4C2B brown
+#BFA20A gold
+#293116 dark green
+*/
 body {
   margin: 0px;
-  font-family: Arial, Helvetica, sans-serif;
-  background-color: #FBF9EF;
-  padding: 0px 6%; }
+  font-family: Molengo, Arial, Helvetica, sans-serif;
+  background-color: #441708;
+  padding: 0px 6%;
+  text-align: center; }
+
+#container {
+  margin: 0 auto;
+  width: 800px;
+  text-align: left;
+  border-left: solid 2px #7d4c2b;
+  border-right: solid 2px #7d4c2b;
+  background: #293116; }
+
+#header {
+  border-bottom: solid 1px #7d4c2b;
+  height: 80px; }
+
+#logo {
+  float: left;
+  display: inline-block; }
+
+#header-links {
+  float: right;
+  display: inline-block;
+  color: #bfa20a;
+  margin-right: 6px; }
 
 #main {
   margin: 16px; }
 
+#footer {
+  height: 40px;
+  font-size: .75em;
+  color: #bfa20a; }
+
+#footer a, #header a {
+  color: #bfa20a; }
+
+#copyright {
+  float: left;
+  display: inline-block;
+  margin: 20px 6px 0 6px; }
+
+#footer-links {
+  float: right;
+  display: inline-block;
+  margin: 20px 6px 0 6px; }
+
+/*------ old styles for getting stuff to work early on ------*/
 #park_days_list {
   margin: 0;
   padding: 0; }

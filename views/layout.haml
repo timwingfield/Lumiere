@@ -3,16 +3,26 @@
   %head
     %title
       Project Lumiere: Trip Info Storage
+    %link{:rel => "stylesheet", :type => "text/css", :href => "http://fonts.googleapis.com/css?family=Molengo"}/
     %link{:href => "/css/site.css", :rel => "stylesheet", :type => "text/css"}/
     %link{:href => "/css/start/jquery-ui-1.8.4.custom.css", :rel => "stylesheet", :type => "text/css"}/
     %script{:type => "text/javascript", :src => "/js/jquery-1.4.2.min.js"}
     %script{:type => "text/javascript", :src => "/js/jquery-ui-1.8.4.custom.min.js"}
   %body
-    #header
-      %h2
-        Project Lumiere: Trip Info Storage
-      %a{:href => "/"} Home
-    #main
-      = yield
-    #footer
-      built with a lot of love...
+    #container
+      #header
+        #logo
+          %img{:src => "/images/boardwalk-logo.gif", :height => "80"}
+        #header-links
+          - %w(Spongebob account logout).each do |link|
+            %a{:href => "#"}=link.strip
+            = "&nbsp;|&nbsp;" unless link == "logout"
+      #main
+        = yield
+      #footer
+        #copyright
+          Copyright &copy; 2010 ManageTheMouse.com. All Rights Reserved
+        #footer-links
+          - %w(about contact twitter facebook).each do |link|
+            %a{:href => "#"}=link.strip
+            = "&nbsp;|&nbsp;" unless link == "facebook"
