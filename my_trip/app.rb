@@ -13,6 +13,7 @@ class MyTrip < Sinatra::Base
   end
 
   get "/" do
+    @trips = Trip.all
     haml :index
   end
 

@@ -1,11 +1,15 @@
 require 'rubygems'
 require 'sinatra'
+require 'sinatra/base'
+require 'my_trip/app'
 require 'rack/test'
 require 'rspec'
-#require 'spec/autorun'
-#require 'spec/interop/test'
 require 'mongoid'
-require 'my_trip/app'
+
+set :environment, :test
+set :run, false
+set :raise_errors, true
+set :logging, false
 
 Mongoid.configure do |config|
   name = "LumiereTest"
@@ -14,11 +18,6 @@ Mongoid.configure do |config|
 end
 Dir["lib/*"].each {|file| require file}
 Dir["my_trip/model/*"].each {|file| require file }
-
-set :environment, :test
-set :run, false
-set :raise_errors, true
-set :logging, false
 
 require 'mongoid-rspec'
 
