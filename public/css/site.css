@@ -9,6 +9,10 @@
 #BFA20A gold
 #293116 dark green
 */
+.clear {
+  clear: both;
+  height: 0; }
+
 body {
   margin: 0px;
   font-family: Molengo, Arial, Helvetica, sans-serif;
@@ -39,7 +43,7 @@ body {
   margin-right: 6px; }
 
 #main {
-  margin: 16px; }
+  clear: both; }
 
 #footer {
   height: 40px;
@@ -58,6 +62,28 @@ body {
   float: right;
   display: inline-block;
   margin: 20px 6px 0 6px; }
+
+#user-landing-left, #user-landing-right {
+  display: inline-block;
+  float: left;
+  position: relative; }
+
+#user-landing-left {
+  width: 480px; }
+
+#user-landing-right {
+  width: 320px; }
+
+#quick-look, #current-trips, #past-trips {
+  border: solid 1px #bfa20a;
+  background: #E8E8E8;
+  margin: 0 40px 40px 40px; }
+
+#quick-look {
+  width: 240px; }
+
+#current-trips, #past-trips {
+  width: 400px; }
 
 /*------ old styles for getting stuff to work early on ------*/
 #park_days_list {

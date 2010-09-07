@@ -23,6 +23,11 @@
         #copyright
           Copyright &copy; 2010 ManageTheMouse.com. All Rights Reserved
         #footer-links
+          -# These two links are the old way, need removed
+          %a{:href => "/new", :title => "add a new trip"} add a trip
+          &nbsp;|&nbsp;
+          %a{:href => "/list", :title => "view your trips"} view trips
+          &nbsp;|&nbsp;
           - %w(about contact twitter facebook).each do |link|
             %a{:href => "#"}=link.strip
             = "&nbsp;|&nbsp;" unless link == "facebook"

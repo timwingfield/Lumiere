@@ -13,6 +13,8 @@
 $gold: #bfa20a; 
 $brown: #7d4c2b;
 
+.clear {clear: both; height: 0;}
+
 body
 {
 	margin: 0px;
@@ -54,7 +56,7 @@ body
 
 #main
 {
-  margin: 16px;
+  clear: both;
 }
 
 #footer
@@ -83,6 +85,40 @@ body
   margin: 20px 6px 0 6px;
 }
 
+
+#user-landing-left, #user-landing-right
+{
+  display: inline-block;
+  float:left;
+  position: relative;
+}
+
+#user-landing-left
+{
+  width: 480px;
+}
+
+#user-landing-right
+{
+  width: 320px;
+}
+
+#quick-look, #current-trips, #past-trips
+{
+  border: solid 1px $gold;
+  background: #E8E8E8;
+  margin: 0 40px 40px 40px;
+}
+
+#quick-look
+{
+  width: 240px;
+}
+
+#current-trips, #past-trips
+{
+  width: 400px;
+}
 
 /*------ old styles for getting stuff to work early on ------*/
 #park_days_list { margin: 0; padding: 0}
