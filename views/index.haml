@@ -1,8 +1,9 @@
 #user-landing-top
   #user-landing-left
     #current-trips
-      %p Trip here
-      %p Trip 2 here
+      - @trips.each do |trip|
+        %p= trip.name
+        .trip-details= trip.length_and_begins_on
     #past-trips
       %p Old trip 1
   #user-landing-right
