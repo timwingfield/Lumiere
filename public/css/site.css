@@ -85,6 +85,26 @@ body {
 #current-trips, #past-trips {
   width: 400px; }
 
+.current-trip-row {
+  cursor: pointer;
+  margin: 4px 8px 4px 8px; }
+  .current-trip-row p {
+    margin-left: 6px;
+    font-size: 1.2em;
+    font-weight: bold; }
+  .current-trip-row span {
+    margin-left: 6px;
+    font-size: .8em;
+    font-weight: normal; }
+
+.not-selected {
+  border: solid 2px #E8E8E8;
+  background-color: #E8E8E8; }
+
+.selected {
+  border: solid 2px #251472;
+  background-color: #bfa20a; }
+
 /*------ old styles for getting stuff to work early on ------*/
 #park_days_list {
   margin: 0;

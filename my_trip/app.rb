@@ -13,8 +13,15 @@ class MyTrip < Sinatra::Base
   end
 
   get "/" do
-    @trips = Trip.all
+    @trips = Trip.all.asc(:start_date)
     haml :index
+  end
+
+  get "/:trip/days/summary" do
+    trip = Trip.find_by_slug params[:trip]
+    @days = trip.park_days
+    #"<p>No of days: #{trip.park_days.length}</p><p>Mongo merely pawn in game of life</p>"
+    haml :days_summary, :layout => false
   end
 
   get "/new" do

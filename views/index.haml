@@ -1,13 +1,39 @@
+:javascript
+  $(function() {
+    $("#past-trips").hide();
+    selectCurrentTripRow($(".current-trip-row")[0]);
+
+    $(".current-trip-row").click(function(){
+      selectCurrentTripRow(this);
+    });
+
+    function selectCurrentTripRow(row){
+      $(".current-trip-row").each(function(){
+        $(this).removeClass('selected ui-corner-all').addClass('not-selected');
+      });
+
+      $(row).addClass('selected ui-corner-all');
+      var loading = "<p style='text-align: center'><img src='images/loading.gif' alt='loading...' /></p>";
+      var slug = $(row).attr('slug');
+      var url = slug + "/days/summary";
+
+      $("#items").html(loading).load(url);
+    }
+  });
 #user-landing-top
   #user-landing-left
-    #current-trips
+    #current-trips{:class => 'ui-corner-all'}
       - @trips.each do |trip|
-        %p= trip.name
-        .trip-details= trip.length_and_begins_on
-    #past-trips
+        .current-trip-row{:slug => trip.slug}
+          %p
+            = trip.name
+            %span
+              = trip.length_and_begins_on
+    #past-trips{:class => 'ui-corner-all'}
       %p Old trip 1
   #user-landing-right
-    #quick-look
-      %p Daily details
+    #quick-look{:class => 'ui-corner-all'}
+      #scrollable
+        #items 
   .clear
 #user-landing-bottom
