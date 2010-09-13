@@ -1,8 +1,11 @@
 :javascript
   $(function() {
+    $.ajaxSetup({cache: false});
     $("#past-trips").hide();
     selectCurrentTripRow($(".current-trip-row")[0]);
 
+    $(".scrollable").scrollable({circular: true});
+    
     $(".current-trip-row").click(function(){
       selectCurrentTripRow(this);
     });
@@ -17,7 +20,9 @@
       var slug = $(row).attr('slug');
       var url = slug + "/days/summary";
 
-      $("#items").html(loading).load(url);
+      //Move scrollable to first index
+      //Then load with the new item
+      $(".items").html(loading).load(url);
     }
   });
 #user-landing-top
@@ -32,8 +37,11 @@
     #past-trips{:class => 'ui-corner-all'}
       %p Old trip 1
   #user-landing-right
-    #quick-look{:class => 'ui-corner-all'}
-      #scrollable
-        #items 
+    %a{:class => "prev browse left"}PREV
+    #quick-look
+      .scrollable{:class => 'ui-corner-all'} 
+        .items
+    %a{:class => "next browse right"}NEXT
+    .navi
   .clear
 #user-landing-bottom
